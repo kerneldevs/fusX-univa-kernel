@@ -6,6 +6,8 @@
  *
  * Copyright (C) 2008 Fabio Checconi <fabio@gandalf.sssup.it>
  *		      Paolo Valente <paolo.valente@unimore.it>
+ *
+ * Licensed under the GPL-2 as detailed in the accompanying COPYING.BFQ file.
  */
 
 #ifdef CONFIG_CGROUP_BFQIO
@@ -669,8 +671,8 @@ static void bfqio_attach(struct cgroup_subsys *subsys, struct cgroup *cgroup,
 	task_lock(tsk);
 	ioc = tsk->io_context;
 	if (ioc != NULL) {
-		BUG_ON(atomic_long_read(&ioc->refcount) == 0);
-		atomic_long_inc(&ioc->refcount);
+		BUG_ON(atomic_read(&ioc->refcount) == 0);
+		atomic_inc(&ioc->refcount);
 	}
 	task_unlock(tsk);
 
